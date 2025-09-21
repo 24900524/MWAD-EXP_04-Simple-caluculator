@@ -1,5 +1,5 @@
 # MWAD-EXP_04-Simple-caluculator
-## Date: 21.09.2025
+## Date:21.09.2025
 
 ## AIM
 To  develop a Simple Calculator using React.js with clean and responsive design, ensuring a smooth user experience across different screen sizes.
@@ -46,130 +46,122 @@ Deploy the website.
 Upload to GitHub Pages for free hosting.
 
 ## PROGRAM
-## HTML
+Calculator.jsx
 ```
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator</title>
-    <link rel="stylesheet" href="calc.css">
-</head>
-<body>
-    <h1>CALCULATOR</h1>
-    <div class="calculator">
-        <input type="text" id="display">
-        <div class="buttons">
-            <button onclick="cleardisplay()">C</button>
-            <button onclick="appendvalue('/')">/</button>
-            <button onclick="appendvalue('-')">-</button>
-            <button onclick="appendvalue('*')">X</button>
+import React, { useState } from 'react';
 
-            <button onclick="appendvalue('7')">7</button>
-            <button onclick="appendvalue('8')">8</button>
-            <button onclick="appendvalue('9')">9</button>
-            <button onclick="appendvalue('+')">+</button>
+function Calculator() {
+  const [input, setInput] = useState('');
 
-            <button onclick="appendvalue('4')">4</button>
-            <button onclick="appendvalue('5')">5</button>
-            <button onclick="appendvalue('6')">6</button>
-            <button onclick="calculateresult()">=</button>
+  const handleClick = (value) => {
+    if (value === '=') {
+      try {
+        setInput(eval(input).toString());
+      } catch {
+        setInput('Error');
+      }
+    } else if (value === 'C') {
+      setInput('');
+    } else {
+      setInput(input + value);
+    }
+  };
 
-            <button onclick="appendvalue('1')">1</button>
-            <button onclick="appendvalue('2')">2</button>
-            <button onclick="appendvalue('3')">3</button>
-            <button onclick="appendvalue('.')">.</button>
-        </div>
+  const buttons = ['7', '8', '9', '/', '4', '5', '6', '*',
+                   '1', '2', '3', '-', '0', '.', '=', '+', 'C'];
+
+  return (
+    <div className="calculator">
+      <h3>Simple Calculator</h3>
+      <input value={input} readOnly className="display" />
+      <div className="button-grid">
+        {buttons.map((btn) => (
+          <button key={btn} onClick={() => handleClick(btn)}>{btn}</button>
+        ))}
+      </div>
     </div>
-</body>
-<script src="calc.js"></script>
-</html>
+  );
+}
+
+export default Calculator;
+
 ```
-## CSS
+Calculator.css
 ```
-body{
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: rgb(227, 220, 220);
-    font-family: Arial, Helvetica, sans-serif;
+.calculator {
+  max-width: 250px;
+  margin: 40px auto;
+  padding: 15px;
+  text-align: center;
+  background-color: #000000;
+  border-radius: 8px;
 }
 
-.calculator{
-    border: 2px solid black;
-    background-color: #333;
-    border-radius: 9px;
-    padding: 25px;
-    width: 280px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+.display {
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+  text-align: right;
+  margin-bottom: 10px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-.buttons{
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    gap: 5px;
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
 }
 
-button{
-    height: 50px;
-    font-size: 25px;
-    border: none;
-    border-radius: 5px;
-    font-weight: 400;
-    cursor: pointer;
-    transition: background 0.2s ease ;
+button {
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-button:hover{
-    background: rgb(185, 179, 179);
+/* Colors */
+button:nth-child(n) {
+  background-color: #87ceeb; /* sky blue for default */
+  color: #000;
 }
 
-button:active{
-    background: rgb(148, 140, 140);
+button:nth-child(4n) {
+  background-color: #ffb347; /* orange for operators */
 }
 
-#display{
-    width: 100%;
-    height: 50px;
-    font-size: 25px;
-    text-align: right;
-    margin-bottom: 10px;
-    border: none;
-    border-radius: 4px;
+button:nth-child(17), button:nth-child(18) {
+  background-color: #ff6961; /* red for C and = */
+  color: white;
 }
+
 ```
-## JAVASCRIPT 
+App.jsx
 ```
-const display = document.getElementById('display')
+import React from 'react';
+import Calculator from './Calculator';
+import './Calculator.css';
 
-// add function
-
-function appendvalue(value){
-    display.value += value
+function App() {
+  return (
+    <div className="App">
+      <Calculator />
+    </div>
+  );
 }
 
-function cleardisplay(){
-    display.value = ''
-}
+export default App;
 
-//try and catch property
-
-function calculateresult(){
-    try{
-        display.value = eval(display.value)
-    }
-    catch(error){
-        alert("Invalid Expression")
-        cleardisplay()
-    }
-}
 ```
+
+
 
 ## OUTPUT
-<img width="1919" height="1134" alt="image" src="https://github.com/user-attachments/assets/a0181dc6-8e31-4bc1-bccb-84b2d6b84a4b" />
+![image](https://github.com/user-attachments/assets/437897da-295e-4677-bd72-d2f85adcf0a9)
+![image](https://github.com/user-attachments/assets/3fabb192-8793-4f57-9d4a-60ebd508c1dc)
+
 
 ## RESULT
 The program for developing a simple calculator in React.js is executed successfully.
